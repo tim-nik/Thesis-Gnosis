@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Καλώς ήρθατε στο Γνώσις!</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}?v={{ STATIC_VERSION }}">
+</head>
+<body>
+  {% include "header.html" %}
+
+  <main>
+        <section class="hero">
+            <h1>Καλώς ήρθατε στο Γνώσις!</h1>
+            <p class="slogan">Όταν η μάθηση γίνεται διασκέδαση</p>
+            <p>Αναβαθμίστε τη μάθησή σας με διασκεδαστικά μαθήματα!</p>
+            
+        </section>
+		
+        <section id="features" class="features">
+            <h2>Χαρακτηριστικά</h2>
+            <div class="feature-box">
+                <div class="feature">
+                    <h3>🎮 Διαδραστικά Μαθήματα</h3>
+                    <p>Βυθιστείτε σε συναρπαστικά μαθήματα που κάνουν τη μάθηση απόλαυση!</p>
+                </div>
+                <div class="feature">
+                    <h3>🏆 Κουίζ & Επιτεύγματα</h3>
+                    <p>Δοκιμάστε τις γνώσεις σας και κερδίστε κρυστάλλους και εμβλήματα για τα επιτεύγματά σας!</p>
+                </div>
+                <div class="feature">
+                    <h3>📊 Παρακολούθηση Προόδου</h3>
+                    <p>Παρακολουθήστε την πρόοδό σας και δείτε πόσο μακριά έχετε φτάσει!</p>
+                </div>
+            </div>
+        </section>
+
+		<section id="courses" class="courses">
+		  <h2>Μαθήματα</h2>
+		  <div class="course-container">
+			<div class="course-box">
+			  <h3>📐 Μαθηματικά</h3>
+			  <p>Ξεκινήστε το ταξίδι σας στα μαθηματικά!</p>
+			  <a class="course-button" href="/courses/">Ξεκινήστε</a>
+			</div>
+			<div class="course-box">
+			  <h3>🌍 Γεωγραφία</h3>
+			  <p>Ανακαλύψτε τον κόσμο γύρω σας!</p>
+			  <a class="course-button" href="/courses/">Ξεκινήστε</a>
+			</div>
+			<div class="course-box">
+			  <h3>🧬 Βιολογία</h3>
+			  <p>Γνωρίστε την επιστήμη της ζωής!</p>
+			  <a class="course-button" href="/courses/">Ξεκινήστε</a>
+			</div>
+		  </div>
+		</section>
+
+    <footer>
+        <p>Γνώσις. Παιχνιδοποιημένη πλατφόρμα μάθησης.</p>
+    </footer>
+
+
+</body>
+</html>

@@ -1,0 +1,34 @@
+<header class="site-header" role="banner">
+  <div class="container">
+    <a class="brand" href="/">Γνώσις</a>
+
+    <nav class="site-nav" aria-label="Κύρια πλοήγηση">
+      <ul class="menu">
+        <li><a href="/">Αρχική</a></li>
+        <li><a href="/courses/">Μαθήματα</a></li>
+      </ul>
+
+      <ul class="menu user">
+        {% if user.is_authenticated %}
+          <li class="hello">Γεια σου, <strong>{{ user.username }}</strong></li>
+          <li><a class="btn outline" href="/profile/">Προφίλ</a></li>
+          <li>
+			<form method="post" action="{% url 'logout' %}">
+				{% csrf_token %}
+				<button type="submit" class="btn outline">Αποσύνδεση</button>
+				</form>
+			</li>
+        {% else %}
+          <li class="hello">Επισκέπτης</li>
+          <li><a class="btn" href="{% url 'login' %}">Σύνδεση</a></li>
+          <li><a class="btn outline" href="{% url 'signup' %}">Εγγραφή</a></li>
+        {% endif %}
+		
+		{% if request.user.is_authenticated %}
+			<span class="points-chip">💎 {{ USER_POINTS }}</span>
+		{% endif %}
+
+      </ul>
+    </nav>
+  </div>
+</header>
