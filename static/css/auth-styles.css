@@ -1,0 +1,111 @@
+body {
+    background-color: #f0f8ff; /* Light blue background */
+}
+
+header nav a {
+  color: inherit;           /* ή #fff αν έχεις σκούρο header, ή #222 αν είναι ανοιχτός */
+  text-decoration: none;
+}
+header nav a:hover { text-decoration: underline; }
+
+.auth-container {
+    max-width: 400px;
+    margin: 60px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.auth-container h1 {
+    color: #ff6347; /* Tomato color from the main theme */
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2.2em;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+    border-color: #32cd32; /* Green color from the main theme */
+    outline: none;
+}
+
+.auth-button {
+    background-color: #32cd32; /* Green color from the main theme */
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.auth-button:hover {
+    background-color: #28a745;
+}
+
+.auth-container p {
+    text-align: center;
+    margin-top: 25px;
+    color: #666;
+}
+
+.auth-container a {
+    color: #ff6347; /* Tomato color from the main theme */
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.auth-container a:hover {
+    color: #e74c3c;
+    text-decoration: underline;
+}
+
+
+/* Responsive design */
+@media (max-width: 480px) {
+    .auth-container {
+        margin: 30px auto;
+        padding: 20px;
+    }
+
+    .auth-container h1 {
+        font-size: 1.8em;
+    }
+
+    .form-group input {
+        padding: 10px;
+    }
+
+    .auth-button {
+        padding: 10px;
+        font-size: 16px;
+    }
+}
