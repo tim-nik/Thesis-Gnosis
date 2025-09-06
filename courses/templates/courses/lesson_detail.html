@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8" />
+  <title>{{ lesson.title }} — {{ course.title }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}?v={{ STATIC_VERSION }}">
+</head>
+<body>
+  {% include "header.html" %}
+
+  <main style="padding:16px;max-width:960px;margin:0 auto">
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+      <a href="/">Αρχική</a> ›
+      <a href="/courses/">Μαθήματα</a> ›
+      <a href="{% url 'courses:course_detail' course.slug %}">{{ course.title }}</a> ›
+      <span class="current">{{ lesson.title }}</span>
+    </nav>
+
+    <h1>{{ lesson.title }}</h1>
+    {% if chapter %}<p class="muted">Κεφάλαιο: {{ chapter.title }}</p>{% endif %}
+
+    <article class="lesson-content">
+		{% if lesson.content %}
+			{{ lesson.content|safe }}
+		{% else %}
+			<p class="muted">Δεν υπάρχει περιεχόμενο για αυτό το μάθημα ακόμη.</p>
+		{% endif %}
+	</article>
+	
+	
+	{% if has_published_quiz %}
+		<p><a class="btn" href="{% url 'quizzes:quiz_take' lesson.id %}">Ξεκίνα το Κουίζ</a></p>
+	{% endif %}
+
+
+	
+<p class="muted" style="margin:8px 0">
+  Πρόοδος στο μάθημα: {{ completed_in_course }}/{{ total_lessons }}
+</p>
+
+{% if completed %}
+  <p class="badge" style="display:inline-block;padding:6px 10px;border:2px solid #2a9d8f;border-radius:10px;background:#e6fff8">
+    Ολοκληρώθηκε ✅
+  </p>
+{% else %}
+  <form method="post" action="{% url 'progress:lesson_complete' lesson.id %}" style="display:inline-block">
+    {% csrf_token %}
+    <button class="btn">Σημείωσε ως ολοκληρωμένο</button>
+  </form>
+{% endif %}
+
+
+
+	
+    <!-- Prev / Next -->
+    <div class="lesson-nav">
+      {% if prev_id %}
+        <a class="btn btn-ghost" href="{% url 'courses:lesson_detail' prev_id %}">← Προηγούμενο</a>
+      {% else %}
+        <span class="btn btn-disabled">← Προηγούμενο</span>
+      {% endif %}
+
+      <a class="btn" href="{% url 'courses:course_detail' course.slug %}">Πίσω στο μάθημα</a>
+
+      {% if next_id %}
+        <a class="btn btn-ghost" href="{% url 'courses:lesson_detail' next_id %}">Επόμενο →</a>
+      {% else %}
+        <span class="btn btn-disabled">Επόμενο →</span>
+      {% endif %}
+    </div>
+  </main>
+</body>
+</html>

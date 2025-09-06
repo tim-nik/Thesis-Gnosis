@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ quiz.title }} — {{ lesson.title }}</title>
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}?v={{ STATIC_VERSION }}">
+</head>
+<body>
+  {% include "header.html" %}
+
+  <main style="max-width:960px;margin:0 auto;padding:16px">
+    <nav class="breadcrumb">
+      <a href="/">Αρχική</a> ›
+      <a href="/courses/">Μαθήματα</a> ›
+      <a href="{% url 'courses:course_detail' lesson.chapter.course.slug %}">{{ lesson.chapter.course.title }}</a> ›
+      <a href="{% url 'courses:lesson_detail' lesson.id %}">{{ lesson.title }}</a> ›
+      <span class="current">Κουίζ</span>
+    </nav>
+
+    <h1>{{ quiz.title }}</h1>
+    <form method="post">
+      {% csrf_token %}
+      <ol style="margin:12px 0;padding-left:1.25rem">
+        {% for q in questions %}
+          <li style="margin-bottom:12px">
+            <p style="margin:0 0 6px">{{ q.text }}</p>
+            {% for c in q.choices.all %}
+              <label style="display:block;margin:4px 0">
+                <input type="radio" name="q_{{ q.id }}" value="{{ c.id }}">
+                {{ c.text }}
+              </label>
+            {% empty %}
+              <p class="muted">(Δεν έχουν οριστεί επιλογές)</p>
+            {% endfor %}
+          </li>
+        {% endfor %}
+      </ol>
+
+      <div class="lesson-nav">
+        <a class="btn btn-ghost" href="{% url 'courses:lesson_detail' lesson.id %}">« Πίσω στο μάθημα</a>
+        <button class="btn" type="submit">Υποβολή</button>
+      </div>
+    </form>
+  </main>
+</body>
+</html>

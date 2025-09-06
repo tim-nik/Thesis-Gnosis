@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <title>Αποτέλεσμα — {{ quiz.title }}</title>
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}?v={{ STATIC_VERSION }}">
+</head>
+<body>
+  {% include "header.html" %}
+
+  <main style="max-width:960px;margin:0 auto;padding:16px">
+    <nav class="breadcrumb">
+      <a href="/">Αρχική</a> ›
+      <a href="/courses/">Μαθήματα</a> ›
+      <a href="{% url 'courses:course_detail' quiz.lesson.chapter.course.slug %}">{{ quiz.lesson.chapter.course.title }}</a> ›
+      <a href="{% url 'courses:lesson_detail' quiz.lesson.id %}">{{ quiz.lesson.title }}</a> ›
+      <span class="current">Αποτέλεσμα</span>
+    </nav>
+
+    <h1>Το αποτέλεσμά σου</h1>
+    <p class="muted" style="margin:6px 0 12px">
+      Βαθμός: <strong>{{ attempt.score }}</strong> / {{ attempt.total }}
+    </p>
+
+    <div class="lesson-box">
+      <h2 style="margin:0 0 8px">Απαντήσεις</h2>
+      <ol style="margin:8px 0; padding-left:1.25rem">
+        {% for a in answers %}
+          <li style="margin-bottom:8px">
+            <div>{{ a.question.text }}</div>
+            {% if a.selected_choice %}
+              {% if a.is_correct %}
+                <div style="color:#1b7e1b">✓ Σωστό: {{ a.selected_choice.text }}</div>
+              {% else %}
+                <div style="color:#b30000">✗ Λάθος: {{ a.selected_choice.text }}</div>
+                {% for c in a.question.choices.all %}
+                  {% if c.is_correct %}<div class="muted">Σωστή απάντηση: {{ c.text }}</div>{% endif %}
+                {% endfor %}
+              {% endif %}
+            {% else %}
+              <div class="muted">Δεν δόθηκε απάντηση.</div>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ol>
+    </div>
+
+    <div class="lesson-nav">
+      <a class="btn" href="{% url 'courses:lesson_detail' quiz.lesson.id %}">Επιστροφή στο μάθημα</a>
+    </div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8" />
+  <title>{{ course.title }} — Μαθήματα</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- cache bust -->
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}?v={{ STATIC_VERSION }}">
+</head>
+<body>
+  {% include "header.html" %}
+
+  <main style="padding:16px;max-width:960px;margin:0 auto">
+    <section class="course-hero">
+      <h1>{{ course.title }}</h1>
+      {% if course.description %}<p class="muted">{{ course.description }}</p>{% endif %}
+      <div class="course-stats">Σύνολο μαθημάτων: {{ lessons|length }}</div>
+    </section>
+
+    {% if chapters and chapters|length > 0 %}
+      {% for ch in chapters %}
+        <section class="chapter-block">
+          <h2 class="chapter-title">{{ ch.title }}</h2>
+          <ol class="lesson-list">
+            {% for ls in ch.lessons.all %}
+              <li class="lesson-card">
+                <div class="lesson-index">{{ forloop.counter }}</div>
+                <div class="lesson-main">
+                  <h3 class="lesson-title">
+                    <a href="{% url 'courses:lesson_detail' ls.id %}">{{ ls.title }}</a>
+                  </h3>
+                </div>
+                <div class="lesson-actions">
+                  <a class="btn" href="{% url 'courses:lesson_detail' ls.id %}">Άνοιγμα</a>
+                </div>
+              </li>
+            {% empty %}
+              <li>Δεν υπάρχουν μαθήματα σε αυτό το κεφάλαιο.</li>
+            {% endfor %}
+          </ol>
+        </section>
+      {% endfor %}
+    {% else %}
+      <p>Δεν υπάρχουν κεφάλαια/μαθήματα.</p>
+    {% endif %}
+
+    <p style="margin-top:16px">
+	  <a class="btn" href="{% url 'courses:course_list' %}">Πίσω στα μαθήματα</a>
+    </p>
+  </main>
+</body>
+</html>

@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <title>Μαθήματα</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}?v={{ STATIC_VERSION }}">
+</head>
+<body>
+  {% include "header.html" %}
+
+  <main style="padding:16px;max-width:960px;margin:0 auto">
+    <h1>Μαθήματα</h1>
+
+    <div class="course-list">
+      {% for c in courses %}
+        <article class="course-row">
+          <div class="course-avatar">{{ c.title|first }}</div>
+          <div class="course-meta">
+            <h3>{{ c.title }}</h3>
+            {% if c.description %}<p>{{ c.description|truncatewords:18 }}</p>{% endif %}
+          </div>
+          <div class="course-actions">
+            {% if c.slug %}
+              <a class="btn" href="{% url 'courses:course_detail' c.slug %}">Άνοιγμα</a>
+            {% else %}
+              <a class="btn" href="{% url 'courses:course_detail_by_id' c.id %}">Άνοιγμα</a>
+            {% endif %}
+          </div>
+        </article>
+      {% empty %}
+        <p>Δεν υπάρχουν μαθήματα ακόμα.</p>
+      {% endfor %}
+    </div>
+  </main>
+</body>
+</html>
